@@ -9,20 +9,26 @@ public class RetroMultithreadingAdventure {
         Cleric cleric = new Cleric(0, null);
         Thief thief = new Thief(0, null);
 
-        Thread knightThread = new Thread(knight);
-        Thread clericThread = new Thread(cleric);
-        Thread thiefThread = new Thread(thief);
+        for (int i = 0; i < 2; i++) {
+            if (i > 0) {
+                System.out.println("A new adventure begins!");
+            }
+            Thread knightThread = new Thread(knight);
+            Thread clericThread = new Thread(cleric);
+            Thread thiefThread = new Thread(thief);
 
-        knightThread.start();
-        clericThread.start();
-        thiefThread.start();
+        
+            knightThread.start();
+            clericThread.start();
+            thiefThread.start();
 
-        try {
-            knightThread.join();
-            clericThread.join();
-            thiefThread.join();
-        } catch (InterruptedException e) {
-            System.err.println("Adventure interrupted!");
+            try {
+                knightThread.join();
+                clericThread.join();
+                thiefThread.join();
+            } catch (InterruptedException e) {
+                System.err.println("Adventure interrupted!");
+            }
         }
         System.out.println("The adventure has concluded!");
     }
