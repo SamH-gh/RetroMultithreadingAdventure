@@ -1,35 +1,16 @@
 package main;
-import playable.Cleric;
-import playable.Knight;
-import playable.Thief;
 
 public class RetroMultithreadingAdventure {
     public static void main(String[] args) {
-        Knight knight = new Knight(0, null);
-        Cleric cleric = new Cleric(0, null);
-        Thief thief = new Thief(0, null);
-
         for (int i = 0; i < 2; i++) {
-            if (i > 0) {
-                System.out.println("A new adventure begins!");
+            if (i == 0) {
+                System.out.println("party approaches monster 1");
+                PlayerThreadControl.main(args);
             }
-            Thread knightThread = new Thread(knight);
-            Thread clericThread = new Thread(cleric);
-            Thread thiefThread = new Thread(thief);
-
-        
-            knightThread.start();
-            clericThread.start();
-            thiefThread.start();
-
-            try {
-                knightThread.join();
-                clericThread.join();
-                thiefThread.join();
-            } catch (InterruptedException e) {
-                System.err.println("Adventure interrupted!");
+            if (i == 1) {
+                System.out.println("party approaches monster 2");
+                PlayerThreadControl.main(args);
             }
         }
-        System.out.println("The adventure has concluded!");
     }
 }

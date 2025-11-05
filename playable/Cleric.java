@@ -9,7 +9,7 @@ public class Cleric extends GameCharacter implements Runnable {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         System.out.println("Cleric sets out to slay the dragon!");
         Random rand = new Random();
         try {
