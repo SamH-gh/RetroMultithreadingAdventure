@@ -5,17 +5,19 @@ public class Knight extends GameCharacter implements Runnable {
 
     public Knight(int partyAlive, String name) {
         super(partyAlive, name);
-    }
-    public void run() {
+    } 
+
+    @Override
+    public synchronized void run() {
         System.out.println("Knight sets out to slay the dragon!");
         Random rand = new Random();
         try {
-            for (int i = 1; i <= 5; i++) {
+            for (int i = 1; i <= 2; i++) {
                 System.out.println("Knight: Step" + i);
-                if (i == 3) {
+                if (i == 1) {
                     System.out.println("Knight encounters a fierce dragon!");
                 }
-                if (i == 4 ) {
+                if (i == 2 ) {
                     System.out.println("Knight battles the dragon!");
                 }
                 Thread.sleep(rand.nextInt(1000) + 500);
