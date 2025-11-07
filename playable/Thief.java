@@ -17,6 +17,11 @@ public class Thief extends GameCharacter implements Runnable {
     }
 
     @Override
+    public int getAttackDamage() {
+        return 25;
+    }
+
+    @Override
     public void defend() {
         System.out.println("Thief dodges the attack!");
     }

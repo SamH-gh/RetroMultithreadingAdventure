@@ -17,6 +17,11 @@ public class Cleric extends GameCharacter implements Runnable {
     }
 
     @Override
+    public int getAttackDamage() {
+        return 20;
+    }
+
+    @Override
     public void defend() {
         System.out.println("Casts a protective spell!");
     }
