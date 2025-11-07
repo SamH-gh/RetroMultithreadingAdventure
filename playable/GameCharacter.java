@@ -16,7 +16,26 @@ public abstract class GameCharacter {
         return name;
     }
 
-    public abstract void run();
+    public synchronized void run() {
+        try {
+            for (int i = 1; i <= 3; i++) {
+                System.out.println(name + ": Step" + i);
+                if (i == 1) {
+                    attack();
+                }
+                if (i == 2 ) {
+                    defend();
+                }
+                if (i == 3) {
+                    interact();
+                }
+                Thread.sleep(500);
+            }
+        } catch (InterruptedException e) {
+            System.err.println(name + "'s adventure was interrupted!");
+        }
+        System.out.println(name + " has slain the dragon!");
+    };
     public abstract void attack();
     public abstract void defend();
     public abstract void interact();
