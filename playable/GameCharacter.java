@@ -1,15 +1,21 @@
 package playable;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import main.Clown;
 
 public abstract class GameCharacter {
     protected boolean partyAlive;
     protected String name;
     protected Clown target; // shared enemy target
+    protected boolean Attacked = false;
 
     public GameCharacter(int partyAlive, String name) {
         this.partyAlive = true;
         this.name = name;
+    }
+
+    public AtomicInteger getClownHealth() {
+        return target != null ? new AtomicInteger(target.getHp()) : new AtomicInteger(0);
     }
 
     /**
@@ -30,26 +36,17 @@ public abstract class GameCharacter {
 
     public synchronized void run() {
         try {
-            for (int i = 1; i <= 3; i++) {
-                System.out.println(name + ": Step" + i);
-                if (i == 1) {
-                    attack();
-                    // apply damage to target if available
-                    if (target != null && target.isAlive()) {
-                        target.takeDamage(getAttackDamage(), name);
-                    }
+            while (target != null && target.isAlive()) {
+                if (Attacked == false) {
+                    Attacked = true;
+                    attack(); 
+                    target.takeDamage(getAttackDamage(), name);
+                } else {
+                    Thread.sleep(1000);
                 }
-                if (i == 2 ) {
-                    defend();
-                }
-                if (i == 3) {
-                    interact();
-                }
-                Thread.sleep(500);
             }
-        } catch (InterruptedException e) {
-            System.err.println(name + "'s adventure was interrupted!");
-            Thread.currentThread().interrupt();
+        } catch (Exception e) {
+            System.err.println(name + "'s adventure encountered an error: " + e.getMessage());
         }
         System.out.println(name + " has finished its actions.");
     };

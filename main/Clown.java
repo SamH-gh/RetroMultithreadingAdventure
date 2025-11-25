@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Clown {
     private final AtomicInteger health;
+    public boolean isDefeated = false;
 
     public Clown(int initialHp) {
         this.health = new AtomicInteger(initialHp);
