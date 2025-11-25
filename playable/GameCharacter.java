@@ -7,7 +7,7 @@ public abstract class GameCharacter {
     protected boolean partyAlive;
     protected String name;
     protected Clown target; // shared enemy target
-    protected boolean Attacked = false;
+    
 
     public GameCharacter(int partyAlive, String name) {
         this.partyAlive = true;
@@ -34,22 +34,25 @@ public abstract class GameCharacter {
      */
     public abstract int getAttackDamage();
 
-    public synchronized void run() {
+    public void run() {
         try {
             while (target != null && target.isAlive()) {
-                if (Attacked == false) {
-                    Attacked = true;
-                    attack(); 
+                // synchronize on the shared target so an attack (attack print + damage application)
+                // happens atomically relative to other threads attacking the same Clown.
+                synchronized (target) {
+                    attack();
                     target.takeDamage(getAttackDamage(), name);
-                } else {
-                    Thread.sleep(1000);
                 }
+                Thread.sleep(1000);
             }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.err.println(name + "'s thread was interrupted.");
         } catch (Exception e) {
             System.err.println(name + "'s adventure encountered an error: " + e.getMessage());
         }
-        System.out.println(name + " has finished its actions.");
-    };
+        // System.out.println(name + " has finished its actions.");
+    }
     public abstract void attack();
     public abstract void defend();
     public abstract void interact();

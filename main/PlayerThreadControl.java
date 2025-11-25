@@ -33,7 +33,5 @@ public class PlayerThreadControl {
         } catch (InterruptedException e) {
             System.err.println("Adventure interrupted!");
         }
-
-        System.out.println("The adventure has concluded!");
     }
 }
