@@ -1,10 +1,15 @@
 package main;
 import java.util.Scanner;
+import playable.GameCharacter;
 
 public class RetroMultithreadingAdventure {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < 2; i++) {
+            if (GameCharacter.partyAlive == false) {
+                System.out.println("The party has been defeated. Game over.");
+                break;
+            }
             System.out.println("The party approaches an undead clown telling jokes...");
             Clown clown = new Clown();
             clown.tellJoke();
@@ -19,6 +24,8 @@ public class RetroMultithreadingAdventure {
             }
         }
         scanner.close();
-        System.out.println("You survived the haunted carnival!");
+        if (GameCharacter.partyAlive) {
+            System.out.println("You survived the haunted carnival!");
+        }
     }
 }

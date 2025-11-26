@@ -43,7 +43,7 @@ public class Clown {
     /**
      * Clown attack: returns damage amount and prints action.
      */
-    public int attack() {
+    public int clownAttack() {
         Random rand = new Random();
         int damage = rand.nextInt(11) + 5; // 5..15
         System.out.println("Clown attacks with a pie, dealing " + damage + " damage!");

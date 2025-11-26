@@ -4,13 +4,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import main.Clown;
 
 public abstract class GameCharacter {
-    protected boolean partyAlive;
+    public static boolean partyAlive = true; // whether the party is still alive
     protected String name;
     protected Clown target; // shared enemy target
-    
+    public int hp; // health points
 
     public GameCharacter(int partyAlive, String name) {
-        this.partyAlive = true;
+        this.hp = 100; // default health points
         this.name = name;
     }
 
@@ -42,8 +42,16 @@ public abstract class GameCharacter {
                 synchronized (target) {
                     attack();
                     target.takeDamage(getAttackDamage(), name);
+                    target.clownAttack();
                 }
                 Thread.sleep(1000);
+                hp -= target.clownAttack();
+                System.out.println("the party now has " + hp + " health remaining.");
+                if (hp <= 0) {
+                    partyAlive = false;
+                    System.out.println("Party has been defeated by the Clown!");
+                    break;
+                }
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
