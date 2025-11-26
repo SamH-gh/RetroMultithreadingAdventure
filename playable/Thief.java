@@ -14,6 +14,7 @@ public class Thief extends GameCharacter implements Runnable {
     @Override
     public void attack() {
         System.out.println("Thief attacks with a dagger!");
+        if (stats != null) stats.recordEvent(name + " attacked");
     }
 
     @Override

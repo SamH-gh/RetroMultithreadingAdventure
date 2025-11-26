@@ -14,6 +14,7 @@ public class Knight extends GameCharacter implements Runnable {
     @Override
     public void attack() {
         System.out.println("Knight attacks with a sword!");
+        if (stats != null) stats.recordEvent(name + " attacked");
     }
     
     @Override

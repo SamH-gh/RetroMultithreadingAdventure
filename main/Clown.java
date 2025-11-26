@@ -12,7 +12,7 @@ public class Clown {
     }
 
     public Clown() {
-        this(150);
+        this(75);
     }
 
     /**

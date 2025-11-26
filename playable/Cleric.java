@@ -14,6 +14,7 @@ public class Cleric extends GameCharacter implements Runnable {
     @Override
     public void attack() {
         System.out.println("Cleric attacks with a mace!");
+        if (stats != null) stats.recordEvent(name + " attacked");
     }
 
     @Override
