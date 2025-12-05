@@ -3,9 +3,9 @@ package main;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import playable.Cleric;
-import playable.Knight;
-import playable.Thief;
+import playable.Acrobat;
+import playable.FortuneTeller;
+import playable.StrongMan;
 
 public class GameEngine {
     public static void runEncounter() {
@@ -17,18 +17,18 @@ public class GameEngine {
         // shared party health (characters share this pool)
         java.util.concurrent.atomic.AtomicInteger partyHp = new java.util.concurrent.atomic.AtomicInteger(100);
 
-        Knight knight = new Knight(0, "Knight");
-        Cleric cleric = new Cleric(0, "Cleric");
-        Thief thief = new Thief(0, "Thief");
+        StrongMan strongMan = new StrongMan(0, "Strong Man");
+        FortuneTeller fortuneTeller = new FortuneTeller(0, "Fortune Teller");
+        Acrobat acrobat = new Acrobat(0, "Acrobat");
 
         // share target and resources
-        knight.setTarget(clown);
-        cleric.setTarget(clown);
-        thief.setTarget(clown);
+        strongMan.setTarget(clown);
+        fortuneTeller.setTarget(clown);
+        acrobat.setTarget(clown);
 
-        knight.setChest(chest); knight.setStats(stats);
-        cleric.setChest(chest); cleric.setStats(stats);
-        thief.setChest(chest); thief.setStats(stats);
+        strongMan.setChest(chest); strongMan.setStats(stats);
+        fortuneTeller.setChest(chest); fortuneTeller.setStats(stats);
+        acrobat.setChest(chest); acrobat.setStats(stats);
 
         // We'll use an ExecutorService to control execution order of character steps.
         // A single-thread executor will run submitted Runnables sequentially.
@@ -37,7 +37,7 @@ public class GameEngine {
         // Clown will attack deterministically between character steps (no separate clown thread)
 
         // Execute per-step: for each step, run each character in order, then let the clown attack.
-        java.util.List<playable.GameCharacter> players = java.util.Arrays.asList(knight, cleric, thief);
+        java.util.List<playable.GameCharacter> players = java.util.Arrays.asList(strongMan, fortuneTeller, acrobat);
         int maxSteps = 3;
         outer:
         for (int step = 1; step <= maxSteps; step++) {
@@ -88,25 +88,28 @@ public class GameEngine {
 
         // After players finish, if clown is defeated, distribute remaining loot to players
         if (!clown.isAlive()) {
-            System.out.println("Clown defeated — distributing loot to survivors...");
-            java.util.List<playable.GameCharacter> playersList = java.util.Arrays.asList(knight, cleric, thief);
-            int idx = 0;
-            main.Item it;
-            while ((it = chest.takeItem()) != null) {
-                playable.GameCharacter p = playersList.get(idx % playersList.size());
-                p.addItem(it);
-                stats.recordItemCollected(p.getName(), it);
-                System.out.println(p.getName() + " picks up " + it.getName() + " after the clown's defeat.");
-                idx++;
-            }
+            System.out.println("\nDistributing loot to survivors...\n");
+            java.util.List<playable.GameCharacter> playersList = java.util.Arrays.asList(strongMan, fortuneTeller, acrobat);
+            java.util.concurrent.atomic.AtomicInteger idx = new java.util.concurrent.atomic.AtomicInteger(0);
+
+            // Use a generated stream that polls the chest until it returns null; distribute items round-robin.
+            java.util.stream.Stream.generate(chest::takeItem)
+                .takeWhile(java.util.Objects::nonNull)
+                .forEach(it -> {
+                    int i = idx.getAndIncrement();
+                    playable.GameCharacter p = playersList.get(i % playersList.size());
+                    p.addItem(it);
+                    stats.recordItemCollected(p.getName(), it);
+                    System.out.println(p.getName() + " picks up " + it.getName() + " after the clown's defeat.");
+                });
         }
 
         System.out.println("Encounter finished. Remaining loot: " + chest.remaining());
         stats.printSummary();
 
         System.out.println("Inventories:");
-        System.out.println(" - " + knight.getName() + ": " + knight.getInventory());
-        System.out.println(" - " + cleric.getName() + ": " + cleric.getInventory());
-        System.out.println(" - " + thief.getName() + ": " + thief.getInventory());
+        java.util.stream.Stream.of(strongMan, fortuneTeller, acrobat)
+            .map(p -> " - " + p.getName() + ": " + p.getInventory())
+            .forEach(System.out::println);
     }
 }

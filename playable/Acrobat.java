@@ -1,10 +1,10 @@
 package playable;
 
-public class Knight extends GameCharacter implements Runnable {
+public class Acrobat extends GameCharacter implements Runnable {
 
-    public Knight(int partyAlive, String name) {
+    public Acrobat(int partyAlive, String name) {
         super(partyAlive, name);
-    } 
+    }
 
     @Override
     public void run() {
@@ -13,22 +13,22 @@ public class Knight extends GameCharacter implements Runnable {
 
     @Override
     public void attack() {
-        System.out.println("Knight attacks with a sword!");
+        System.out.println("Acrobat strikes with a baton!");
         if (stats != null) stats.recordEvent(name + " attacked");
     }
-    
+
     @Override
     public int getAttackDamage() {
-        return 30;
+        return 25;
     }
 
     @Override
     public void defend() {
-        System.out.println("Knight raises his shield to defend!");
+        System.out.println("Acrobat flips away to dodge the attack!");
     }
 
     @Override
     public void interact() {
-        System.out.println("Knight shouts a battle cry!");
+        System.out.println("Acrobat performs an impressive somersault!");
     }
 }

@@ -20,7 +20,10 @@ public class GameStats {
     public void printSummary() {
         System.out.println("\n--- Round Summary ---");
         System.out.println("Events: " + events.size());
-        events.forEach(e -> System.out.println(" - " + e));
+        // Use streams and method reference to print events
+        events.stream()
+              .map(e -> " - " + e)
+              .forEach(System.out::println);
 
         System.out.println("\nItems collected:");
         Map<String, Long> counts = itemEvents.stream()
@@ -29,6 +32,9 @@ public class GameStats {
             .map(arr -> arr[0])
             .collect(Collectors.groupingBy(s -> s, Collectors.counting()));
 
-        counts.forEach((k,v) -> System.out.println(" - " + k + ": " + v));
+        // Print counts using stream mapping for a consistent functional style
+        counts.entrySet().stream()
+              .map(en -> " - " + en.getKey() + ": " + en.getValue())
+              .forEach(System.out::println);
     }
 }

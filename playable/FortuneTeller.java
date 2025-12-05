@@ -1,8 +1,8 @@
 package playable;
 
-public class Cleric extends GameCharacter implements Runnable {
+public class FortuneTeller extends GameCharacter implements Runnable {
 
-    public Cleric(int partyAlive, String name) {
+    public FortuneTeller(int partyAlive, String name) {
         super(partyAlive, name);
     }
 
@@ -13,7 +13,7 @@ public class Cleric extends GameCharacter implements Runnable {
 
     @Override
     public void attack() {
-        System.out.println("Cleric attacks with a mace!");
+        System.out.println("Fortune Teller reads the cards and casts a spectral omen!");
         if (stats != null) stats.recordEvent(name + " attacked");
     }
 
@@ -24,11 +24,11 @@ public class Cleric extends GameCharacter implements Runnable {
 
     @Override
     public void defend() {
-        System.out.println("Casts a protective spell!");
+        System.out.println("Fortune Teller conjures a veil of mist to protect the party!");
     }
 
     @Override
     public void interact() {
-        System.out.println("Cleric heals the party");
+        System.out.println("Fortune Teller whispers cryptic prophecies to the party.");
     }
 }

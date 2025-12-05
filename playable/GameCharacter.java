@@ -49,23 +49,24 @@ public abstract class GameCharacter {
      * This allows the engine to schedule steps individually.
      */
     public void performStep(int step) {
-        System.out.println(name + ": Step" + step);
-        if (step == 1) {
-            attack();
-            if (target != null && target.isAlive()) {
-                target.takeDamage(getAttackDamage(), name);
-            }
-        } else if (step == 2) {
-            defend();
-        } else if (step == 3) {
-            interact();
-        }
+        // Map step numbers to actions using lambdas/method references for clarity
+        java.util.Map<Integer, Runnable> actions = java.util.Map.of(
+            1, () -> {
+                attack();
+                if (target != null && target.isAlive()) {
+                    target.takeDamage(getAttackDamage(), name);
+                }
+            },
+            2, this::defend,
+            3, this::interact
+        );
+
+        actions.getOrDefault(step, () -> {}).run();
     }
 
     public synchronized void run() {
         try {
             for (int i = 1; i <= 3; i++) {
-                System.out.println(name + ": Step" + i);
                 if (i == 1) {
                     attack();
                     if (target != null && target.isAlive()) {

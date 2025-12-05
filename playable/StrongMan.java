@@ -1,10 +1,10 @@
 package playable;
 
-public class Thief extends GameCharacter implements Runnable {
+public class StrongMan extends GameCharacter implements Runnable {
 
-    public Thief(int partyAlive, String name) {
+    public StrongMan(int partyAlive, String name) {
         super(partyAlive, name);
-    }
+    } 
 
     @Override
     public void run() {
@@ -13,22 +13,22 @@ public class Thief extends GameCharacter implements Runnable {
 
     @Override
     public void attack() {
-        System.out.println("Thief attacks with a dagger!");
+        System.out.println("Strong Man punches with his fists!");
         if (stats != null) stats.recordEvent(name + " attacked");
     }
-
+    
     @Override
     public int getAttackDamage() {
-        return 25;
+        return 30;
     }
 
     @Override
     public void defend() {
-        System.out.println("Thief dodges the attack!");
+        System.out.println("Strong Man raises his fists to defend!");
     }
 
     @Override
     public void interact() {
-        System.out.println("Steals something");
+        System.out.println("Strong Man shows off his muscles!");
     }
 }

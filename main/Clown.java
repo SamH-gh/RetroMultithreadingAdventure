@@ -23,7 +23,7 @@ public class Clown {
         int remaining = health.addAndGet(-damage);
         System.out.println(attackerName + " deals " + damage + " damage to the Clown, clown is now at " + Math.max(remaining, 0) + " health!");
         if (remaining <= 0) {
-            System.out.println("The Clown has been defeated by " + attackerName + "!");
+            System.out.println("\nThe Clown has been defeated by " + attackerName + "!");
         }
         return remaining;
     }
