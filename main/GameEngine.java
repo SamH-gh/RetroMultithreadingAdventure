@@ -30,11 +30,8 @@ public class GameEngine {
         fortuneTeller.setChest(chest); fortuneTeller.setStats(stats);
         acrobat.setChest(chest); acrobat.setStats(stats);
 
-        // We'll use an ExecutorService to control execution order of character steps.
-        // A single-thread executor will run submitted Runnables sequentially.
+        // create single-threaded executor for character steps
         ExecutorService executor = Executors.newSingleThreadExecutor();
-
-        // Clown will attack deterministically between character steps (no separate clown thread)
 
         // Execute per-step: for each step, run each character in order, then let the clown attack.
         java.util.List<playable.GameCharacter> players = java.util.Arrays.asList(strongMan, fortuneTeller, acrobat);
@@ -107,6 +104,7 @@ public class GameEngine {
         System.out.println("Encounter finished. Remaining loot: " + chest.remaining());
         stats.printSummary();
 
+        // Print each character's inventory
         System.out.println("Inventories:");
         java.util.stream.Stream.of(strongMan, fortuneTeller, acrobat)
             .map(p -> " - " + p.getName() + ": " + p.getInventory())

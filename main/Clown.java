@@ -15,9 +15,7 @@ public class Clown {
         this(75);
     }
 
-    /**
-     * Apply damage to the clown in a thread-safe way and return remaining HP.
-     */
+    // Apply damage to the clown in a thread-safe way and return remaining HP.
     public int takeDamage(int damage, String attackerName) {
         if (damage <= 0) return health.get();
         int remaining = health.addAndGet(-damage);
@@ -40,9 +38,7 @@ public class Clown {
         JokeAPI.main(new String[0]);
     }
 
-    /**
-     * Clown attack: returns damage amount and prints action.
-     */
+    //Clown attack: returns damage amount and prints action 
     public int clownAttack() {
         Random rand = new Random();
         int damage = rand.nextInt(11) + 5; // 5..15

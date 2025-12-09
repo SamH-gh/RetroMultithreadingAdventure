@@ -1,0 +1,94 @@
+@startuml
+' Packages and classes
+package "main" {
+  class RetroMultithreadingAdventure {
+    +main(String[] args)
+  }
+
+  class GameEngine {
+    +runEncounter()
+  }
+
+  class Clown {
+    -health : java.util.concurrent.atomic.AtomicInteger
+    +takeDamage(int, String)
+    +tellJoke(): void
+    +clownAttack(): int
+    +isAlive(): boolean
+  }
+
+  class JokeAPI {
+    +main(String[] args)
+    +fetchJoke(): String
+  }
+
+  class TreasureChest {
+    +takeItem(): Item
+    +addItems(List<Item>)
+    +remaining(): int
+  }
+
+  class Item {
+    -name : String
+    -value : int
+    +getName(): String
+    +getValue(): int
+  }
+
+  class GameStats {
+    +recordEvent(String)
+    +recordItemCollected(String, Item)
+    +printSummary()
+  }
+}
+
+package "playable" {
+  abstract class GameCharacter {
+    -name : String
+    -inventory : List<Item>
+    -target : main.Clown
+    +performStep(int)
+    +setTarget(main.Clown)
+    +setChest(main.TreasureChest)
+    +setStats(main.GameStats)
+    +getInventory(): List<Item>
+  }
+
+  class StrongMan
+  class FortuneTeller
+  class Acrobat
+}
+
+' Inheritance / Implementation
+GameCharacter <|-- StrongMan
+GameCharacter <|-- FortuneTeller
+GameCharacter <|-- Acrobat
+GameCharacter ..> "java.lang.Runnable" : implements
+
+' Associations / Uses
+RetroMultithreadingAdventure --> GameEngine : invokes
+RetroMultithreadingAdventure --> Clown : creates, calls.tellJoke()
+GameEngine --> Clown : creates / uses
+GameEngine --> TreasureChest : creates / uses
+GameEngine --> GameStats : creates / collects
+GameEngine --> StrongMan : creates
+GameEngine --> FortuneTeller : creates
+GameEngine --> Acrobat : creates
+Clown --> JokeAPI : uses
+GameCharacter --> Clown : has target
+GameCharacter --> TreasureChest : has chest
+GameCharacter --> GameStats : records events
+TreasureChest --> Item : holds
+GameStats --> Item : records
+
+' Notes
+note right of Clown
+  - Thread-safe HP via AtomicInteger
+  - Clown tells jokes via `JokeAPI`, can attack the party
+end note
+
+note left of GameEngine
+  - Orchestrates per-step execution using an ExecutorService
+  - Distributes loot using Stream.generate(chest::takeItem)
+end note
+@enduml

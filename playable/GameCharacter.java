@@ -23,13 +23,12 @@ public abstract class GameCharacter {
         this.name = name;
     }
 
-    /**
-     * Public accessor for the character name so other packages can identify players.
-     */
+    // Public accessor for the character name so other packages can identify players.
     public String getName() {
         return name;
     }
 
+    // Set the shared target clown for this character
     public void setTarget(Clown target) {
         this.target = target;
     }
@@ -39,15 +38,11 @@ public abstract class GameCharacter {
     public List<Item> getInventory() { return inventory; }
     public void addItem(Item i) { if (i != null) inventory.add(i); }
 
-    /**
-     * Return how much damage this character deals when attacking.
-     */
+    // Return how much damage this character deals when attacking.
     public abstract int getAttackDamage();
 
-    /**
-     * Perform a single numbered step for this character (1=attack,2=defend,3=interact).
-     * This allows the engine to schedule steps individually.
-     */
+    // Perform a single numbered step for this character (1=attack,2=defend,3=interact).
+    // This allows the engine to schedule steps individually.
     public void performStep(int step) {
         // Map step numbers to actions using lambdas/method references for clarity
         java.util.Map<Integer, Runnable> actions = java.util.Map.of(
