@@ -30,6 +30,10 @@ Uses a stream to distribute the loot at the end of each round.
     -IDE: VScode
     -Version Control: GitHub
     -API: JokeAPI
+    -Streams & Lambda expressions.
+    - I used an atomic integer on the clown's health to ensure it is 
+    accessed and depleted accurately since all threads are hitting it
+    at the same time. 
 
 -JokeAPI:
 
@@ -50,4 +54,12 @@ retrieved from the API endpoint for the clowns to tell.
 -Contributers & Responsibilities
 
     -Samuel Hay
+
+AI CONTRIBUTION:
+
+Co-pilot assisted me throughout the project in debugging and was a major time saver for refactoring 
+later in the process (changing my character titles). I also used AI to assist me with getting the clown
+class linked to the GameCharacter class so that the two would interact in battle. I utilized AI to rewrite my
+code for distributing loot into a stream. AI primarily wrote the end of round summary code.
+I also had AI generate a plantUML design based on my class setup.
 
