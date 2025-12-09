@@ -1,0 +1,68 @@
+- Samuel Hay CSC325-FA25
+
+-Project Name: 
+
+Multithread Haunted Carnival Undead Clown Hunters
+
+-Summary:
+
+A short game using multi-threading to control multiple characters at once. The characters (Strong Man, Acrobat, Fortune Teller)
+run in parallel threads and interact with a shared game world. 
+
+The adventure takes place in a haunted carnival filled with undead clowns. 
+Our party must hear each clown's joke and if the joke is not funny, they must attack and defeat the clown.
+The party earns loot after each fight and a round summary explains the results of the fight.
+
+-Features:
+
+Easy to play. The game presents the user with a joke and decides the next move based on the user's input (is the joke funny? yes or no).
+
+The game uses a free API to pull jokes automatically from the internet. I have ensured filters are in place to prevent any not safe for school jokes
+from appearing. 
+
+Each player character is a separate thread with their own attack and attack value.
+
+Uses a stream to distribute the loot at the end of each round.
+
+-Technologies uses:
+
+    -Java 21/OpenJDK 21
+    -IDE: VScode
+    -Version Control: GitHub
+    -API: JokeAPI
+    -Streams & Lambda expressions.
+    - I used an atomic integer on the clown's health to ensure it is 
+    accessed and depleted accurately since all threads are hitting it
+    at the same time. 
+    -I also implemented an Executor Service to control the behavior
+    of the threads so that they act in-turn and the output is cleaner
+    in the terminal. Also give the clown a chance to fight back.
+
+-JokeAPI:
+
+This program implements JokeAPI by parsing the joke from a json 
+retrieved from the API endpoint for the clowns to tell.
+
+-How to run:
+
+    *Powershell/Windows
+    Compile: javac -d bin main\\*.java playable\\*.java
+
+    Run: java -cp bin main.RetroMultithreadingAdventure
+
+    *IDE
+    Import project and run
+    
+
+-Contributers & Responsibilities
+
+    -Samuel Hay
+
+AI CONTRIBUTION:
+
+Co-pilot assisted me throughout the project in debugging and was a major time saver for refactoring 
+later in the process (changing my character titles). I also used AI to assist me with getting the clown
+class linked to the GameCharacter class so that the two would interact in battle. I utilized AI to rewrite my
+code for distributing loot into a stream. AI primarily wrote the end of round summary code.
+I also had AI generate a plantUML design based on my class setup.
+

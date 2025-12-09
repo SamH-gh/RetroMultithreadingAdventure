@@ -1,0 +1,8 @@
+{
+  // Use PlantUML server for rendering previews (no local Graphviz required)
+  "plantuml.render": "PlantUMLServer",
+  "plantuml.server": "https://www.plantuml.com/plantuml",
+  "plantuml.previewAutoUpdate": true,
+  // Optional: set default export format
+  "plantuml.exportFormat": "png"
+}
