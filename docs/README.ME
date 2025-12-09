@@ -34,6 +34,9 @@ Uses a stream to distribute the loot at the end of each round.
     - I used an atomic integer on the clown's health to ensure it is 
     accessed and depleted accurately since all threads are hitting it
     at the same time. 
+    -I also implemented an Executor Service to control the behavior
+    of the threads so that they act in-turn and the output is cleaner
+    in the terminal. Also give the clown a chance to fight back.
 
 -JokeAPI:
 
