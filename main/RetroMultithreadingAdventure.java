@@ -10,7 +10,8 @@ public class RetroMultithreadingAdventure {
         System.out.println("Welcome to the Haunted Carnival!");
 
         // Main game loop for multiple encounters
-        for (int i = 0; i < 2; i++) {
+        int encounterNumber = 4;
+        for (int i = 0; i < encounterNumber; i++) {
             if (GameCharacter.partyAlive == false) {
                 System.out.println("The party has been defeated. Game over.");
                 break;

@@ -35,7 +35,7 @@ public class GameEngine {
 
         // Execute per-step: for each step, run each character in order, then let the clown attack.
         java.util.List<playable.GameCharacter> players = java.util.Arrays.asList(strongMan, fortuneTeller, acrobat);
-        int maxSteps = 3;
+        int maxSteps = 5;
         outer:
         for (int step = 1; step <= maxSteps; step++) {
             for (playable.GameCharacter pc : players) {
@@ -89,7 +89,7 @@ public class GameEngine {
             java.util.List<playable.GameCharacter> playersList = java.util.Arrays.asList(strongMan, fortuneTeller, acrobat);
             java.util.concurrent.atomic.AtomicInteger idx = new java.util.concurrent.atomic.AtomicInteger(0);
 
-            // Use a generated stream that polls the chest until it returns null; distribute items round-robin.
+            // Use a generated stream that polls the chest until it returns null; distribute items.
             java.util.stream.Stream.generate(chest::takeItem)
                 .takeWhile(java.util.Objects::nonNull)
                 .forEach(it -> {
